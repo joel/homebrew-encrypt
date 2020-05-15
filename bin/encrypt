@@ -1,12 +1,15 @@
 #!/usr/bin/env ruby
 
+`export RBENV_VERSION=2.7.1`
+
+puts(`ruby --version`)
+
 require_relative '../lib/passy.rb'
 
 require 'pry'
 
 # Convert a password stored into the clipboard
 # bin/encrypt --clipboard
-
 
 # bin/encrypt --password '1%195bDf!g'
 # 6!105BdF%g
@@ -17,3 +20,5 @@ require 'pry'
 
 encryptor = Passy::Ui.new
 encryptor.convert
+
+`export RBENV_VERSION=`

@@ -2,15 +2,17 @@
 
 require 'optparse'
 require 'clipboard'
+require 'passgen'
 
 module Passy
   class OptparseExample
     class ScriptOptions
-      attr_accessor :password, :verbose, :direction, :clipboard
+      attr_accessor :password, :verbose, :direction, :clipboard, :generate
 
       def initialize
         self.verbose = false
         self.clipboard = false
+        self.generate = false
         self.direction = 'forward'
       end
 
@@ -25,6 +27,7 @@ module Passy
 
         boolean_verbose_option(parser)
         boolean_clipboard_option(parser)
+        boolean_generate_option(parser)
 
         parser.separator ""
         parser.separator "Common options:"
@@ -61,6 +64,13 @@ module Passy
         end
       end
 
+      def boolean_generate_option(parser)
+        # Boolean switch.
+        parser.on("-v", "--[no-]generate", "Generate password") do |g|
+          self.generate = g
+        end
+      end
+
       def boolean_clipboard_option(parser)
         # Boolean switch.
         parser.on("-c", "--[no-]clipboard", "Get the content from the clipboard") do |c|
@@ -91,7 +101,7 @@ module Passy
       example = OptparseExample.new
       @options = example.parse(ARGV)
 
-      if !options.clipboard && !options.password
+      if !options.generate && !options.clipboard && !options.password
         help(example.option_parser)
         exit(1)
       end
@@ -103,10 +113,22 @@ module Passy
     end
 
     def convert
-      password = options.clipboard ? Clipboard.paste : options.password
-      s = Encryptor.new.encrypt(password: password, direction: options.direction)
-      Clipboard.copy s
-      puts s
+      if options.generate
+        s = Passgen::generate({
+          :length => 30,
+          :symbols => true,
+          :lowercase => true,
+          :uppercase => true,
+          :digits => true
+        })
+        Clipboard.copy s
+        puts s
+      else
+        password = options.clipboard ? Clipboard.paste : options.password
+        s = Encryptor.new.encrypt(password: password, direction: options.direction)
+        Clipboard.copy s
+        puts s
+      end
     end
 
     def help(opts)
@@ -118,6 +140,29 @@ module Passy
       puts("    --direction 'forward'")
       puts("    --direction 'backward'")
       puts("-----------------------------------------------------------------------------------")
+      puts("")
+      puts("Generate a password")
+      puts("encrypt --generate")
+      puts("")
+      puts("/i?T1%sBUXQ6jkHP57h%pEHVF?!tmE+tQ4vwkaVd6uese")
+      puts("-----------------------------------------------------------------------------------")
+      puts("")
+      puts("Get printable version")
+      puts("encrypt --clipboard")
+      puts("")
+      puts("+i!T6?sbuxq7JKhp59H%pehvf%?tMe/tq4VWKAvD7UESE")
+      puts("-----------------------------------------------------------------------------------")
+      puts("")
+      puts("Get back password")
+      puts("encrypt --clipboard --direction 'backward'")
+      puts("")
+      puts("/i?T1%sBUXQ6jkHP57h%pEHVF?!tmE+tQ4vwkaVd6uese")
+      puts("-----------------------------------------------------------------------------------")
+      puts("")
+      puts("Get back password")
+      puts("encrypt --password '+i!T6?sbuxq7JKhp59H%pehvf%?tMe/tq4VWKAvD7UESE' --direction 'backward'")
+      puts("")
+      puts("/i?T1%sBUXQ6jkHP57h%pEHVF?!tmE+tQ4vwkaVd6uese")
     end
 
     attr_reader :options
