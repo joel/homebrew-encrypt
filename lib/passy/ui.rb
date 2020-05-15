@@ -122,12 +122,12 @@ module Passy
           :digits => true
         })
         Clipboard.copy s
-        puts s
+        s
       else
         password = options.clipboard ? Clipboard.paste : options.password
         s = Encryptor.new.encrypt(password: password, direction: options.direction)
         Clipboard.copy s
-        puts s
+        s
       end
     end
 

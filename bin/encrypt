@@ -19,6 +19,48 @@ require 'pry'
 # 1%195bDf!g
 
 encryptor = Passy::Ui.new
-encryptor.convert
+password = encryptor.convert
+puts password
+
+require 'erb'
+class Html
+  attr_reader :password
+
+  def initialize(password)
+    @password = password
+  end
+
+  def render
+    b = binding
+    # create and run templates, filling member data variables
+    html = <<-HTML
+      <!doctype html>
+      <html>
+        <head>
+          <style type="text/css">
+            h1 {
+              text-align: center;
+              font-size: 3.5em;
+            }
+          </style>
+        </head>
+        <body>
+          <h1>
+            <%= @password %>
+          </h1>
+        </body>
+      </html>
+    HTML
+    ERB.new(html).result(b)
+  end
+end
+
+File.open('index.html', 'w') { |f| f.write(Html.new(password).render) }
+
+`open index.html`
+
+sleep(1)
+
+`rm -v index.html`
 
 `export RBENV_VERSION=`
