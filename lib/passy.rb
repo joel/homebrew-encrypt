@@ -1,6 +1,4 @@
-require "passy/version"
-
-require "zeitwerk"
+require 'zeitwerk'
 loader = Zeitwerk::Loader.for_gem
 loader.setup
 
