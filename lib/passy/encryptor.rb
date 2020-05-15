@@ -8,6 +8,10 @@ module Passy
     # Exception 1. After a symbol if the next entry is not a symbol do not apply any rule
     # Exception 2. After a symbol if the next entry is a symbol continue on Rule 2.
     def encrypt(password:, direction: :forward)
+      raise Passy::Error.new("Bad direction [#{direction}]") unless direction
+      direction = direction.to_sym
+      raise Passy::Error.new("Bad direction [#{direction}]") unless %i[forward backward].include?(direction)
+
       encrypted_password = String.new
 
       array = password.scan(/./)

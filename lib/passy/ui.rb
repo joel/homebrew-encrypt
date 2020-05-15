@@ -1,14 +1,17 @@
 # frozen_string_literal: true
 
 require 'optparse'
+require 'clipboard'
 
 module Passy
   class OptparseExample
     class ScriptOptions
-      attr_accessor :password, :verbose, :direction
+      attr_accessor :password, :verbose, :direction, :clipboard
 
       def initialize
         self.verbose = false
+        self.clipboard = false
+        self.direction = 'forward'
       end
 
       def define_options(parser)
@@ -21,6 +24,7 @@ module Passy
         password_option(parser)
 
         boolean_verbose_option(parser)
+        boolean_clipboard_option(parser)
 
         parser.separator ""
         parser.separator "Common options:"
@@ -56,6 +60,13 @@ module Passy
           self.verbose = v
         end
       end
+
+      def boolean_clipboard_option(parser)
+        # Boolean switch.
+        parser.on("-c", "--[no-]clipboard", "Get the content from the clipboard") do |c|
+          self.clipboard = c
+        end
+      end
     end
 
     #
@@ -80,11 +91,11 @@ module Passy
       example = OptparseExample.new
       @options = example.parse(ARGV)
 
-      unless options.password
+      if !options.clipboard && !options.password
         help(example.option_parser)
         exit(1)
       end
-      options.direction ||= 'forward'
+
       unless %i[forward backward].include?(options.direction.to_sym)
         help(example.option_parser)
         exit(1)
@@ -92,7 +103,10 @@ module Passy
     end
 
     def convert
-      puts Encryptor.new.encrypt(password: options.password, direction: options.direction)
+      password = options.clipboard ? Clipboard.paste : options.password
+      s = Encryptor.new.encrypt(password: password, direction: options.direction)
+      Clipboard.copy s
+      puts s
     end
 
     def help(opts)
