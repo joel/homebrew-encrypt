@@ -1,10 +1,9 @@
 require "passy/version"
-require "active_support/dependencies/autoload"
+
+require "zeitwerk"
+loader = Zeitwerk::Loader.for_gem
+loader.setup
 
 module Passy
-  extend ActiveSupport::Autoload
-
   class Error < StandardError; end
-
-  autoload :Encryptor
 end
