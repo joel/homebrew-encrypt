@@ -28,10 +28,10 @@ module Passy
 
         },
       ].each do |hash|
-        it do
+        it 'forward' do
           expect(subject.encrypt(password: hash[:input])).to eql(hash[:output])
         end
-        it do
+        it 'backward' do
           expect(subject.decrypt(encrypted_password: hash[:output])).to eql(hash[:input])
         end
       end
