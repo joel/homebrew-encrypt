@@ -40,7 +40,7 @@ module Passy
 
   class OptparseExample
     class ScriptOptions
-      attr_accessor :password, :verbose, :direction, :clipboard, :generate, :show
+      attr_accessor :password, :verbose, :direction, :clipboard, :generate, :show, :symbols, :length
 
       def initialize
         self.verbose = false
@@ -48,6 +48,8 @@ module Passy
         self.generate = false
         self.show = false
         self.direction = 'forward'
+        self.symbols = true
+        self.length = 30
       end
 
       def define_options(parser)
@@ -58,11 +60,13 @@ module Passy
         # add additional options
         direction_option(parser)
         password_option(parser)
+        password_length_option(parser)
 
         boolean_verbose_option(parser)
         boolean_clipboard_option(parser)
         boolean_generate_option(parser)
         boolean_show_option(parser)
+        boolean_symbols_option(parser)
 
         parser.separator ""
         parser.separator "Common options:"
@@ -92,10 +96,23 @@ module Passy
         end
       end
 
+      def password_length_option(parser)
+        parser.on('-l LENGTH', '--length LENGTH', '[OPTIONAL] Password length', String) do |length|
+          self.length = length
+        end
+      end
+
       def boolean_verbose_option(parser)
         # Boolean switch.
         parser.on("-v", "--[no-]verbose", "Run verbosely") do |v|
           self.verbose = v
+        end
+      end
+
+      def boolean_symbols_option(parser)
+        # Boolean switch.
+        parser.on("-i", "--[no-]symbols", "Do not include symbols") do |i|
+          self.symbols = i
         end
       end
 
@@ -159,8 +176,8 @@ module Passy
 
       if options.generate
         generated_password = Passgen::generate({
-          :length => 30,
-          :symbols => true,
+          :length => options.length,
+          :symbols => options.symbols,
           :lowercase => true,
           :uppercase => true,
           :digits => true
