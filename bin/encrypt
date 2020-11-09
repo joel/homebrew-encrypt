@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# cp encrypt /usr/local/bin/encrypt
+
 function exists()
 {
   command -v "$1" >/dev/null 2>&1
@@ -14,14 +16,14 @@ function pathadd() {
 # Here's how to use it:
 
 if exists ruby; then
-  echo 'ruby exists!'
+  # echo 'ruby exists!'
 else
   echo 'Your system does not have rbenv installed'
   exit 1
 fi
 
 if exists rbenv; then
-  echo 'rbenv exists!'
+  # echo 'rbenv exists!'
 else
   echo 'Your system does not have rbenv installed'
 fi
