@@ -1,5 +1,7 @@
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/joel/homebrew-encrypt)
 
+![Test](https://github.com/actions/hello-world/workflows/test/badge.svg)
+
 # Passy
 
 A simple password encoder. The idea is too simple to encode in a human comprehensive level you password before writing them done in a physical notebook. This way you can safely keep your password in physical support without risked them to theft.
