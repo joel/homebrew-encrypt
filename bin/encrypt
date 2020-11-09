@@ -16,14 +16,14 @@ function pathadd() {
 # Here's how to use it:
 
 if exists ruby; then
-  echo 'ruby exists!'
+  echo 'ruby exists!' >/dev/null 2>&1
 else
   echo 'Your system does not have rbenv installed'
   exit 1
 fi
 
 if exists rbenv; then
-  echo 'rbenv exists!'
+  echo 'rbenv exists!' >/dev/null 2>&1
 else
   echo 'Your system does not have rbenv installed'
 fi
@@ -33,7 +33,7 @@ if exists rbenv; then
 fi
 
 ## TODO: make the all direction in the path
-ruby ~/WorkSpace/Utils/passy/bin/encrypt.rb $@
+ruby ./bin/encrypt.rb $@
 
 if test -f "generated_password.html"; then
   open "generated_password.html"
