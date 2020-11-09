@@ -3,17 +3,53 @@
 require 'optparse'
 require 'clipboard'
 require 'passgen'
+require 'erb'
 
 module Passy
+  class Html
+    attr_reader :password
+
+    def initialize(password)
+      @password = password
+    end
+
+    def render
+      b = binding
+      # create and run templates, filling member data variables
+      html = <<-HTML
+        <!doctype html>
+        <html>
+          <head>
+            <style type="text/css">
+              h1 {
+                text-align: center;
+                font-size: 3.5em;
+              }
+            </style>
+          </head>
+          <body>
+            <h1>
+              <%= @password %>
+            </h1>
+          </body>
+        </html>
+      HTML
+      ERB.new(html).result(b)
+    end
+  end
+
   class OptparseExample
     class ScriptOptions
-      attr_accessor :password, :verbose, :direction, :clipboard, :generate
+      attr_accessor :password, :verbose, :direction, :clipboard, :generate, :show, :symbols, :length
 
       def initialize
         self.verbose = false
         self.clipboard = false
         self.generate = false
+        self.show = false
         self.direction = 'forward'
+        self.symbols = true
+        self.length = 30
       end
 
       def define_options(parser)
@@ -24,10 +60,13 @@ module Passy
         # add additional options
         direction_option(parser)
         password_option(parser)
+        password_length_option(parser)
 
         boolean_verbose_option(parser)
         boolean_clipboard_option(parser)
         boolean_generate_option(parser)
+        boolean_show_option(parser)
+        boolean_symbols_option(parser)
 
         parser.separator ""
         parser.separator "Common options:"
@@ -57,10 +96,23 @@ module Passy
         end
       end
 
+      def password_length_option(parser)
+        parser.on('-l LENGTH', '--length LENGTH', '[OPTIONAL] Password length', String) do |length|
+          self.length = length
+        end
+      end
+
       def boolean_verbose_option(parser)
         # Boolean switch.
         parser.on("-v", "--[no-]verbose", "Run verbosely") do |v|
           self.verbose = v
+        end
+      end
+
+      def boolean_symbols_option(parser)
+        # Boolean switch.
+        parser.on("-i", "--[no-]symbols", "Do not include symbols") do |i|
+          self.symbols = i
         end
       end
 
@@ -75,6 +127,13 @@ module Passy
         # Boolean switch.
         parser.on("-c", "--[no-]clipboard", "Get the content from the clipboard") do |c|
           self.clipboard = c
+        end
+      end
+
+      def boolean_show_option(parser)
+        # Boolean switch.
+        parser.on("-s", "--[no-]show", "Show the password in the current browser") do |s|
+          self.show = s
         end
       end
     end
@@ -113,22 +172,30 @@ module Passy
     end
 
     def convert
+      generated_password = nil
+
       if options.generate
-        s = Passgen::generate({
-          :length => 30,
-          :symbols => true,
+        generated_password = Passgen::generate({
+          :length => options.length,
+          :symbols => options.symbols,
           :lowercase => true,
           :uppercase => true,
           :digits => true
         })
-        Clipboard.copy s
-        s
       else
         password = options.clipboard ? Clipboard.paste : options.password
-        s = Encryptor.new.encrypt(password: password, direction: options.direction)
-        Clipboard.copy s
-        s
+        generated_password = Encryptor.new.encrypt(password: password, direction: options.direction)
       end
+
+      @password = generated_password
+      Clipboard.copy(generated_password)
+      show_in_browser if options.show
+
+      generated_password
+    end
+
+    def show_in_browser
+      File.open('generated_password.html', 'w') { |f| f.write(Html.new(self.password).render) }
     end
 
     def help(opts)
@@ -165,6 +232,6 @@ module Passy
       puts("/i?T1%sBUXQ6jkHP57h%pEHVF?!tmE+tQ4vwkaVd6uese")
     end
 
-    attr_reader :options
+    attr_reader :options, :password
   end
 end

@@ -1,66 +1,46 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env bash
 
-`export RBENV_VERSION=2.7.1`
+# cp encrypt /usr/local/bin/encrypt
 
-puts(`ruby --version`)
+function exists()
+{
+  command -v "$1" >/dev/null 2>&1
+}
 
-require_relative '../lib/passy.rb'
+function pathadd() {
+  if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+      PATH="${PATH:+"$PATH:"}$1"
+  fi
+}
 
-require 'pry'
+# Here's how to use it:
 
-# Convert a password stored into the clipboard
-# bin/encrypt --clipboard
+if exists ruby; then
+  echo 'ruby exists!'
+else
+  echo 'Your system does not have rbenv installed'
+  exit 1
+fi
 
-# bin/encrypt --password '1%195bDf!g'
-# 6!105BdF%g
+if exists rbenv; then
+  echo 'rbenv exists!'
+else
+  echo 'Your system does not have rbenv installed'
+fi
 
-# Get back the password from the clipboard
-# bin/encrypt --clipboard --direction 'backward'
-# 1%195bDf!g
+if exists rbenv; then
+  export RBENV_VERSION=2.7.1
+fi
 
-encryptor = Passy::Ui.new
-password = encryptor.convert
-puts password
+## TODO: make the all direction in the path
+ruby ~/WorkSpace/Utils/passy/bin/encrypt.rb $@
 
-require 'erb'
-class Html
-  attr_reader :password
+if test -f "generated_password.html"; then
+  open "generated_password.html"
+  sleep 1
+  rm -v "generated_password.html"
+fi
 
-  def initialize(password)
-    @password = password
-  end
-
-  def render
-    b = binding
-    # create and run templates, filling member data variables
-    html = <<-HTML
-      <!doctype html>
-      <html>
-        <head>
-          <style type="text/css">
-            h1 {
-              text-align: center;
-              font-size: 3.5em;
-            }
-          </style>
-        </head>
-        <body>
-          <h1>
-            <%= @password %>
-          </h1>
-        </body>
-      </html>
-    HTML
-    ERB.new(html).result(b)
-  end
-end
-
-File.open('index.html', 'w') { |f| f.write(Html.new(password).render) }
-
-`open index.html`
-
-sleep(1)
-
-`rm -v index.html`
-
-`export RBENV_VERSION=`
+if exists rbenv; then
+  export RBENV_VERSION=
+fi
