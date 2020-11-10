@@ -1,9 +1,9 @@
 class Encrypt < Formula
-  desc "Generate and decrypt password"
+  desc "Encode password"
   homepage "https://github.com/joel/homebrew-encrypt"
-  version "0.4"
+  version "0.5"
 
-  url "https://github.com/joel/homebrew-encrypt/archive/0.4.zip", :using => :curl
+  url "https://github.com/joel/homebrew-encrypt/archive/0.5.zip", :using => :curl
 
   def install
     bin.install "bin/encrypt"
