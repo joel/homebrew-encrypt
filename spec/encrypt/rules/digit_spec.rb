@@ -1,4 +1,4 @@
-module Passy
+module Encrypt
   module Rules
     RSpec.describe Digit do
       describe '.call' do

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Passy
+module Encrypt
   module Rules
     class Digit
       include Base

@@ -2,6 +2,6 @@ require 'zeitwerk'
 loader = Zeitwerk::Loader.for_gem
 loader.setup
 
-module Passy
+module Encrypt
   class Error < StandardError; end
 end

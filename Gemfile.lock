@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    passy (0.1.0)
+    encrypt (0.1.0)
       clipboard
       zeitwerk
 
@@ -39,7 +39,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  passy!
+  encrypt!
   pry-byebug
   rake (~> 12.0)
   rspec (~> 3.0)

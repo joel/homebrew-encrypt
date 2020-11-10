@@ -4,7 +4,7 @@ require 'optparse'
 require 'clipboard'
 require 'erb'
 
-module Passy
+module Encrypt
   class Html
     attr_reader :password
 
@@ -49,7 +49,7 @@ module Passy
       end
 
       def define_options(parser)
-        parser.banner = "Usage: Passy [options]"
+        parser.banner = "Usage: Encrypt [options]"
         parser.separator ""
         parser.separator "Specific options:"
 
@@ -72,7 +72,7 @@ module Passy
         end
         # Another typical switch to print the version.
         parser.on_tail("--version", "Show version") do
-          puts Passy::VERSION
+          puts Encrypt::VERSION
           exit
         end
       end

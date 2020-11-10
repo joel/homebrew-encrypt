@@ -1,8 +1,8 @@
-require_relative 'lib/passy/version'
+require_relative 'lib/encrypt/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "passy"
-  spec.version       = Passy::VERSION
+  spec.name          = "encrypt"
+  spec.version       = Encrypt::VERSION
   spec.authors       = ["Joel AZEMAR"]
   spec.email         = ["joel.azemar@gmail.com"]
 

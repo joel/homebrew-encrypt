@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Passy
+module Encrypt
   class Encryptor
 
     def rules
@@ -17,12 +17,12 @@ module Passy
     # Exception 1. After a symbol if the next entry is not a symbol do not apply any rule
     # Exception 2. After a symbol if the next entry is a symbol continue on Rule 2.
     def encrypt(password:, direction: :forward)
-      raise Passy::Error.new("Bad direction [#{direction}]") unless direction
+      raise Encrypt::Error.new("Bad direction [#{direction}]") unless direction
       direction = direction.to_sym
-      raise Passy::Error.new("Bad direction [#{direction}]") unless %i[forward backward].include?(direction)
+      raise Encrypt::Error.new("Bad direction [#{direction}]") unless %i[forward backward].include?(direction)
 
       temp_password = password.dup
-      (rules + [Object.const_get("Passy::Rules::Mapping::#{direction.to_s.capitalize}::Map")]).each do |rule|
+      (rules + [Object.const_get("Encrypt::Rules::Mapping::#{direction.to_s.capitalize}::Map")]).each do |rule|
         temp_password = rule.call(temp_password)
       end
 

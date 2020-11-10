@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/passy.rb'
+require_relative '../lib/encrypt.rb'
 
 require 'pry'
 
@@ -14,7 +14,7 @@ require 'pry'
 # bin/encrypt --clipboard --direction 'backward'
 # 1%195bDf!g
 
-encryptor = Passy::Ui.new
+encryptor = Encrypt::Ui.new
 password = encryptor.convert
 
 puts password

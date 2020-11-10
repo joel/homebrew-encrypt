@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Passy
+module Encrypt
   module Rules
     module Mapping
       module Base

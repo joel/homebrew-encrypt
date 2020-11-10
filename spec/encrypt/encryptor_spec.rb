@@ -1,4 +1,4 @@
-module Passy
+module Encrypt
   RSpec.describe Encryptor do
     describe '#encrypt' do
       [

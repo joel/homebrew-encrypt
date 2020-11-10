@@ -2,15 +2,11 @@
 
 ![Ruby](https://github.com/joel/homebrew-encrypt/workflows/Ruby/badge.svg)
 
-# Passy
+# Encrypt
 
-A simple password encoder. The idea is too simple to encode in a human comprehensive level you password before writing them done in a physical notebook. This way you can safely keep your password in physical support without risked them to theft.
+A simple password encoder. The idea is to encode in a human comprehensive level you password before writing them done in a physical notebook. This way you can safely keep your password in physical support without risked them to theft.
 
-This can generate for you new password
-
-    encrypt --generate
-
-And recode it for writing purpose
+This can make printable your password
 
     encrypt --password '<password generated>'
 
@@ -28,7 +24,7 @@ encrypt --clipboard --direction 'backward' => decoding
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'passy'
+gem 'encrypt'
 ```
 
 And then execute:
@@ -37,25 +33,25 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install passy
+    $ gem install encrypt
 
 Install in the system
 
-    ln -s <encrypt_pass> /usr/local/bin/
+    brew tap joel/encrypt
+    brew install encrypt
 
 ## Usage
 
 ```shell
 bin/encrypt
 
-Usage: Passy [options]
+Usage: Encrypt [options]
 
 Specific options:
     -d, --direction ENCRYPTION_MODE  [OPTIONAL] Encryption (default) Or Decryption
     -p, --password PASSWORD          [REQUIRED] Password
         --[no-]verbose               Run verbosely
     -c, --[no-]clipboard             Get the content from the clipboard
-    -v, --[no-]generate              Generate password
 
 Common options:
     -h, --help                       Show this message
@@ -68,8 +64,7 @@ bin/encrypt.rb --password '1%195bDf!g' --direction 'forward'
     --direction 'backward'
 -----------------------------------------------------------------------------------
 
-Generate a password
-encrypt --generate
+Given password
 
 /i?T1%sBUXQ6jkHP57h%pEHVF?!tmE+tQ4vwkaVd6uese
 -----------------------------------------------------------------------------------
@@ -100,7 +95,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/passy. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/passy/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/encrypt. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/encrypt/blob/master/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -108,4 +103,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the Passy project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/passy/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the Encrypt project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/encrypt/blob/master/CODE_OF_CONDUCT.md).

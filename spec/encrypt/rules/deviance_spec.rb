@@ -1,4 +1,4 @@
-module Passy
+module Encrypt
   module Rules
     RSpec.describe Deviance do
       describe '.call' do

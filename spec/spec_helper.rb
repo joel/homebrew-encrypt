@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "passy"
+require "encrypt"
 require 'pry'
 
 RSpec.configure do |config|

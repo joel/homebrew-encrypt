@@ -1,11 +1,11 @@
-module Passy
+module Encrypt
   module Rules
     module Mapping
-      module Backward
+      module Forward
         RSpec.describe Map do
           describe '.call' do
-            let(:input)  { '680' }
-            let(:output) { '189' }
+            let(:input)  { '189' }
+            let(:output) { '680' }
             it do
               expect(described_class.call(input)).to eql(output)
             end

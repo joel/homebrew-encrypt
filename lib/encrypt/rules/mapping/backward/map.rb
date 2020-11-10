@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-module Passy
+module Encrypt
   module Rules
     module Mapping
       module Backward
         class Map
-          include Passy::Rules::Base
-          include Passy::Rules::Mapping::Base
+          include Encrypt::Rules::Base
+          include Encrypt::Rules::Mapping::Base
 
           private
           

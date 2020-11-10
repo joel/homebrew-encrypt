@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in passy.gemspec
+# Specify your gem's dependencies in encrypt.gemspec
 gemspec
 
 gem 'pry-byebug'
