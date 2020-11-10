@@ -2,7 +2,6 @@
 
 require 'optparse'
 require 'clipboard'
-require 'passgen'
 require 'erb'
 
 module Passy
@@ -40,16 +39,13 @@ module Passy
 
   class OptparseExample
     class ScriptOptions
-      attr_accessor :password, :verbose, :direction, :clipboard, :generate, :show, :symbols, :length
+      attr_accessor :password, :verbose, :direction, :clipboard, :show
 
       def initialize
         self.verbose = false
         self.clipboard = false
-        self.generate = false
         self.show = false
         self.direction = 'forward'
-        self.symbols = true
-        self.length = 30
       end
 
       def define_options(parser)
@@ -60,13 +56,10 @@ module Passy
         # add additional options
         direction_option(parser)
         password_option(parser)
-        password_length_option(parser)
 
         boolean_verbose_option(parser)
         boolean_clipboard_option(parser)
-        boolean_generate_option(parser)
         boolean_show_option(parser)
-        boolean_symbols_option(parser)
 
         parser.separator ""
         parser.separator "Common options:"
@@ -96,30 +89,10 @@ module Passy
         end
       end
 
-      def password_length_option(parser)
-        parser.on('-l LENGTH', '--length LENGTH', '[OPTIONAL] Password length', String) do |length|
-          self.length = length
-        end
-      end
-
       def boolean_verbose_option(parser)
         # Boolean switch.
         parser.on("-v", "--[no-]verbose", "Run verbosely") do |v|
           self.verbose = v
-        end
-      end
-
-      def boolean_symbols_option(parser)
-        # Boolean switch.
-        parser.on("-i", "--[no-]symbols", "Do not include symbols") do |i|
-          self.symbols = i
-        end
-      end
-
-      def boolean_generate_option(parser)
-        # Boolean switch.
-        parser.on("-v", "--[no-]generate", "Generate password") do |g|
-          self.generate = g
         end
       end
 
@@ -160,7 +133,7 @@ module Passy
       example = OptparseExample.new
       @options = example.parse(ARGV)
 
-      if !options.generate && !options.clipboard && !options.password
+      if !options.clipboard && !options.password
         help(example.option_parser)
         exit(1)
       end
@@ -172,30 +145,17 @@ module Passy
     end
 
     def convert
-      generated_password = nil
+      given_password = options.clipboard ? Clipboard.paste : options.password
+      @password = Encryptor.new.encrypt(password: given_password, direction: options.direction)
 
-      if options.generate
-        generated_password = Passgen::generate({
-          :length => options.length,
-          :symbols => options.symbols,
-          :lowercase => true,
-          :uppercase => true,
-          :digits => true
-        })
-      else
-        password = options.clipboard ? Clipboard.paste : options.password
-        generated_password = Encryptor.new.encrypt(password: password, direction: options.direction)
-      end
-
-      @password = generated_password
-      Clipboard.copy(generated_password)
+      Clipboard.copy(password)
       show_in_browser if options.show
 
-      generated_password
+      password
     end
 
     def show_in_browser
-      File.open('generated_password.html', 'w') { |f| f.write(Html.new(self.password).render) }
+      File.open('generated_password.html', 'w') { |f| f.write(Html.new(password).render) }
     end
 
     def help(opts)
@@ -206,12 +166,6 @@ module Passy
       puts("")
       puts("    --direction 'forward'")
       puts("    --direction 'backward'")
-      puts("-----------------------------------------------------------------------------------")
-      puts("")
-      puts("Generate a password")
-      puts("encrypt --generate")
-      puts("")
-      puts("/i?T1%sBUXQ6jkHP57h%pEHVF?!tmE+tQ4vwkaVd6uese")
       puts("-----------------------------------------------------------------------------------")
       puts("")
       puts("Get printable version")

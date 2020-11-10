@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# cp encrypt /usr/local/bin/encrypt
-
 function exists()
 {
   command -v "$1" >/dev/null 2>&1
@@ -12,8 +10,6 @@ function pathadd() {
       PATH="${PATH:+"$PATH:"}$1"
   fi
 }
-
-# Here's how to use it:
 
 if exists ruby; then
   echo 'ruby exists!' >/dev/null 2>&1
@@ -32,7 +28,6 @@ if exists rbenv; then
   export RBENV_VERSION=2.7.1
 fi
 
-## TODO: make the all direction in the path
 ruby ./bin/encrypt.rb $@
 
 if test -f "generated_password.html"; then
