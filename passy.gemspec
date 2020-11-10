@@ -23,5 +23,4 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'zeitwerk'
   spec.add_dependency 'clipboard'
-  spec.add_dependency 'passgen'
 end
