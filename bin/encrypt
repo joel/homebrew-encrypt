@@ -18,24 +18,10 @@ else
   exit 1
 fi
 
-if exists rbenv; then
-  echo 'rbenv exists!' >/dev/null 2>&1
-else
-  echo 'Your system does not have rbenv installed'
-fi
-
-if exists rbenv; then
-  export RBENV_VERSION=2.7.1
-fi
-
-ruby ./bin/encrypt.rb $@
+ruby ./bin/encrypt.rb "$@"
 
 if test -f "generated_password.html"; then
   open "generated_password.html"
   sleep 1
   rm -v "generated_password.html"
-fi
-
-if exists rbenv; then
-  export RBENV_VERSION=
 fi
