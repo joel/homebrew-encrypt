@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    encrypt (0.1.0)
+    encrypt (0.6)
       clipboard
       zeitwerk
 
@@ -45,4 +45,4 @@ DEPENDENCIES
   rspec (~> 3.10)
 
 BUNDLED WITH
-   2.1.4
+   2.2.6
