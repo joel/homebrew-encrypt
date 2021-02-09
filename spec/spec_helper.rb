@@ -1,6 +1,10 @@
 require "bundler/setup"
 require "encrypt"
-require 'pry'
+
+begin
+  require 'pry'
+rescue LoadError
+end
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

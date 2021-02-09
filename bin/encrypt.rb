@@ -2,7 +2,10 @@
 
 require_relative '../lib/encrypt.rb'
 
-require 'pry'
+begin
+  require 'pry'
+rescue LoadError
+end
 
 # Convert a password stored into the clipboard
 # bin/encrypt --clipboard
