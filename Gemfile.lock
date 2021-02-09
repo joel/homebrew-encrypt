@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    encrypt (0.6)
+    encrypt (0.7)
       clipboard
       zeitwerk
 

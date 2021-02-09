@@ -18,7 +18,10 @@ else
   exit 1
 fi
 
-ruby ./bin/encrypt.rb "$@"
+export HOWBREW_TAPS_DIRECTORY=/usr/local/Homebrew/Library/Taps
+export PWD_REPOSITORY_NAME=joel/homebrew-encrypt
+
+ruby $HOWBREW_TAPS_DIRECTORY/$PWD_REPOSITORY_NAME/bin/encrypt.rb "$@"
 
 if test -f "generated_password.html"; then
   open "generated_password.html"
