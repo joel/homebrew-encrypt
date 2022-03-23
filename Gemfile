@@ -5,4 +5,4 @@ gemspec
 
 gem 'pry-byebug', platforms: :mri
 gem "rake", "~> 13.0"
-gem "rspec", "~> 3.10"
+gem "rspec", "~> 3.11"
