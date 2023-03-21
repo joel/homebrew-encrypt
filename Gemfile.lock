@@ -11,7 +11,7 @@ GEM
     byebug (11.1.3)
     clipboard (1.3.5)
     coderay (1.1.2)
-    diff-lcs (1.4.4)
+    diff-lcs (1.5.0)
     method_source (1.0.0)
     pry (0.13.1)
       coderay (~> 1.1)
@@ -20,19 +20,19 @@ GEM
       byebug (~> 11.0)
       pry (~> 0.13.0)
     rake (13.0.3)
-    rspec (3.10.0)
-      rspec-core (~> 3.10.0)
-      rspec-expectations (~> 3.10.0)
-      rspec-mocks (~> 3.10.0)
-    rspec-core (3.10.0)
-      rspec-support (~> 3.10.0)
-    rspec-expectations (3.10.0)
+    rspec (3.12.0)
+      rspec-core (~> 3.12.0)
+      rspec-expectations (~> 3.12.0)
+      rspec-mocks (~> 3.12.0)
+    rspec-core (3.12.1)
+      rspec-support (~> 3.12.0)
+    rspec-expectations (3.12.2)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.10.0)
-    rspec-mocks (3.10.0)
+      rspec-support (~> 3.12.0)
+    rspec-mocks (3.12.4)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.10.0)
-    rspec-support (3.10.0)
+      rspec-support (~> 3.12.0)
+    rspec-support (3.12.0)
     zeitwerk (2.4.2)
 
 PLATFORMS
@@ -42,7 +42,7 @@ DEPENDENCIES
   encrypt!
   pry-byebug
   rake (~> 13.0)
-  rspec (~> 3.10)
+  rspec (~> 3.12)
 
 BUNDLED WITH
    2.2.6
